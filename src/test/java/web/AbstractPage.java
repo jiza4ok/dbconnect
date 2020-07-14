@@ -6,21 +6,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.web.WebHelpers;
 
 import java.util.List;
 
 @Slf4j
 public class AbstractPage {
+
     public final WebDriver webDriver;
     protected WebDriverWait wait;
 
     public AbstractPage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        this.wait = new WebDriverWait(webDriver, 5);
-    }
-
-    public AbstractPage get(WebDriver webDriver){
-        return new AbstractPage(webDriver);
+        this.wait = new WebDriverWait(webDriver, 10);
     }
 
     public WebElement find(By by){
@@ -29,7 +27,7 @@ public class AbstractPage {
     }
 
     public List<WebElement>findList(By by){
-//        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
         return webDriver.findElements(by);
     }
 
@@ -37,6 +35,11 @@ public class AbstractPage {
         return webDriver.getTitle();
     }
 
-
+    public boolean isOpeningInNewTab(WebElement element){
+        int windowsCountBefore = WebHelpers.getWindowsList(webDriver).size();
+        element.click();
+        int windowsCountAfter = WebHelpers.getWindowsList(webDriver).size();
+        return windowsCountAfter == windowsCountBefore+1;
+    }
 }
 

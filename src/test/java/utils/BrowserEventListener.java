@@ -1,15 +1,18 @@
 package utils;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
-@Slf4j
+
 public class BrowserEventListener implements WebDriverEventListener {
 
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(BrowserEventListener.class);
     @Override
     public void beforeAlertAccept(WebDriver webDriver) {
 
@@ -72,12 +75,12 @@ public class BrowserEventListener implements WebDriverEventListener {
 
     @Override
     public void beforeFindBy(By by, WebElement webElement, WebDriver webDriver) {
-        log.info("Now we try to find element" + by.toString());
+        LOGGER.info("Now we try to find element" + by.toString());
     }
 
     @Override
     public void afterFindBy(By by, WebElement webElement, WebDriver webDriver) {
-        log.info("We have found element" + webElement.toString());
+        LOGGER.info("We have found element" + webElement.toString());
     }
 
     @Override

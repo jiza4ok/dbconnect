@@ -14,15 +14,21 @@ public class LoginPage extends AbstractPage {
         super(webDriver);
     }
 
-
-   By loginInput = By.xpath("//input[@placeholder='Username']");
+    public static LoginPage open(WebDriver webDriver){
+        if (!webDriver.getCurrentUrl().contains(URL)) webDriver.get(URL);
+        return new LoginPage(webDriver);
+    }
+    final static String URL = "http://3.122.51.38/litecart/admin/login.php";
+    By loginInput = By.xpath("//input[@placeholder='Username']");
     By passwordInput = By.xpath("//input[@placeholder='Password']");
-    @Getter
     By loginButton = By.xpath("//button[@name='login']");
 
-    public void login(String login, String password){
-        find(loginInput).sendKeys(login);
-        find(passwordInput).sendKeys(password);
-        find(loginButton).click();
+
+
+    public AdminPanel login(String login, String password){
+        webDriver.findElement(loginInput).sendKeys(login);
+        webDriver.findElement(passwordInput).sendKeys(password);
+        webDriver.findElement(loginButton).click();
+        return new AdminPanel(webDriver);
     }
 }

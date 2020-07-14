@@ -15,35 +15,51 @@ public class AdminPanel extends AbstractPage {
         super(webDriver);
     }
 
+    public AdminPanel open(){
+        if (!webDriver.getCurrentUrl().contains(URL)) webDriver.get(URL);
+        return this;
+    }
 
+    String URL = "http://3.122.51.38/litecart/admin/";
     By panelHeading = By.cssSelector(".panel-heading");
     By sideMenuList = By.cssSelector(".app");
     By submenuList = By.cssSelector(".doc");
+    By countryList = By.xpath("//a[@href='http://3.122.51.38/litecart/admin/?app=countries&doc=countries']");
+    By countryLink = By.xpath("//tbody//tr[1]//td/a");
+    By catalog = By.xpath("//a[@href='http://3.122.51.38/litecart/admin/?app=catalog&doc=catalog']");
+    By addNewItem = By.xpath("//a[contains(text(),'Add New Product')]");
 
 
 
     public boolean checkHeading(){
-
-            return findList(panelHeading).size() > 0;
-
+            return webDriver.findElements(panelHeading).size() > 0;
     }
 
-    public boolean checkAllHeadings(){
-        List< WebElement > sideMenu = findList(sideMenuList);
-        for (int i = 0; i< sideMenu.size(); i++){
-            sideMenu.get(i).click();
-            List<WebElement>submenu = findList(submenuList);
-            if(submenu.size()>0){
-                System.out.println(submenu.size());
-                for (int j=0;j<submenu.size(); j++){
-                    submenu.get(j).click();
-                    if (checkHeading()==false){return false;}
-                }
-            }
-            else {
-                if (checkHeading() == false) {return false;}
-            }
-        }
-        return true;
+    public List<WebElement> getSideMenu(){
+        return webDriver.findElements(sideMenuList);
+    }
+
+    public boolean hasSubmenu(){
+        return webDriver.findElements(submenuList).size() > 0;
+    }
+
+    public List<WebElement> getSubmenu(){
+        return webDriver.findElements(submenuList);
+    }
+
+    public void openCatalog(){
+       find(catalog).click();
+    }
+
+    public NewProduct addNewProduct(){
+        find(addNewItem).click();
+        return new NewProduct(webDriver);
+    }
+
+
+    public CountryPage openFirstCountry(){
+        find(countryList).click();
+        find(countryLink).click();
+        return new CountryPage(webDriver);
     }
 }
