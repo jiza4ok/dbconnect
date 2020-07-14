@@ -1,7 +1,7 @@
 package api.base_requests;
 
-import api.waiters.ApiWaiter;
-import api.waiters.ValidateResponseWaiter;
+import utils.api.ApiWaiter;
+import utils.api.ValidateResponseWaiter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;

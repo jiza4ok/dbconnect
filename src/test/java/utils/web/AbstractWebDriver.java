@@ -12,7 +12,7 @@ public abstract class AbstractWebDriver {
 
     @BeforeClass(alwaysRun = true)
     public void openDriver() {
-        webDriver = WebDriverManager.getWebDriver();
+        webDriver = WebDriverManager.getWebDriver("chrome");
     }
 
     @AfterClass(alwaysRun = true)

@@ -1,6 +1,6 @@
 package api.base_requests;
 
-import api.Resourses;
+import utils.data.ProjectData;
 import utils.api.ValidateResponseWaiter;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class Post {
 
     public Response withoutAuth(int responseCode, String endpoint, String body) {
-        RestAssured.baseURI = Resourses.getBase_url();
+        RestAssured.baseURI = ProjectData.value("base_url");
         ValidateResponseWaiter responseWaiter = () -> {
             return given()
                     .relaxedHTTPSValidation()
@@ -30,7 +30,7 @@ public class Post {
 
     public Response withToken(String token, int responseCode, String endpoint, String body) {
         ValidateResponseWaiter responseWaiter = () -> {
-            RestAssured.baseURI = Resourses.getBase_url();
+            RestAssured.baseURI = ProjectData.value("base_url");
             return given()
                     .relaxedHTTPSValidation()
                     .auth().oauth2(token)
